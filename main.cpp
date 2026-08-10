@@ -1,58 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <limits>
+#include <cstdlib>
 using namespace std;
 
 void displayBoard(char board[3][3])
 {
-    int counter = 0;
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            if (i % 2 == 0)
-            {
-                if (j % 2 == 0)
-                {
-                    if (board[i / 2][j / 2] != ' ')
-                    {
-                        cout << " " << board[i / 2][j / 2] << " ";
-                    }
-                    else
-                    {
-                        cout << " " << counter << " ";
-                        counter++;
-                    }
-                }
-                else
-                {
-                    cout << "|";
-                }
-            }
-            else
-            {
-                if (j % 2 == 0)
-                {
-                    cout << "---";
-                }
-                else
-                {
-                    cout << "+";
-                }
-            }
-        }
-        cout << endl;
-    }
-}
-
-void updateBoard(int pos, char board[3][3], int turn)
-{
-    if (turn % 2 != 0)
-    {
-        board[pos / 3][pos % 3] = 'O';
-    }
-    else
-    {
-        board[pos / 3][pos % 3] = 'X';
-    }
     int counter = 0;
     for (int i = 0; i < 5; i++)
     {
@@ -93,6 +45,20 @@ void updateBoard(int pos, char board[3][3], int turn)
     }
 }
 
+void updateBoard(int pos, char board[3][3], int turn)
+{
+    if (turn % 2 != 0)
+    {
+        board[pos / 3][pos % 3] = 'O';
+    }
+    else
+    {
+        board[pos / 3][pos % 3] = 'X';
+    }
+
+    displayBoard(board);
+}
+
 void checkStatus(char board[3][3], int pos)
 {
     // j = (pos mod 3)
@@ -126,7 +92,7 @@ void checkStatus(char board[3][3], int pos)
 
     int diagchecker1 = 0;
     int diagchecker2 = 0;
-    if (abs((pos % 3) - (pos / 3)) == 0)
+    if (pos / 3 == pos % 3)
     {
         for (int i = 0, j = 0; i < 3 && j < 3; i++, j++)
         {
@@ -144,7 +110,7 @@ void checkStatus(char board[3][3], int pos)
         }
     }
 
-    if (abs((pos % 3) - (pos / 3)) == 2)
+    if (pos / 3 + pos % 3 == 2)
     {
         for (int i = 0, j = 2; i < 3 && j >= 0; i++, j--)
         {
@@ -210,6 +176,7 @@ int main()
         else
         {
             cout << "Please enter a valid postion." << endl;
+            cout << "----------------------------------" << endl;
             continue;
         }
         updateBoard(pos, board, t + 1);
